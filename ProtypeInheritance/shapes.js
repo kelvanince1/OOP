@@ -10,6 +10,12 @@ Shape.prototype.duplicate = function() {
   console.log('DUPLICATE!');
 };
 
+// Use the create method on the child Object to re-create its prototype using parents prototype
+function extend(Child, Parent) {
+  Child.prototype = Object.create(Parent.prototype);
+  Child.prototype.constructor = Child;
+};
+
 // Define a type of shape which can inherit from the Shape constructor
 // Use the call method on the Shape constructor to pull the color property down and allow it to be made mutatable to the Circle function
 function Circle(radius) {
@@ -18,8 +24,14 @@ function Circle(radius) {
   this.radius = radius;
 };
 
-// Use the create method on the Circles Object to re-create its prototype using Shapes prototype
-Circle.prototype = Object.create(Shape.prototype);
-Circle.prototype.constructor = Circle;
+extend(Circle, Shape);
+
+
+function Square(size) {
+  this.size = size;
+};
+
+extend(Square, Shape);
 
 const c = new Circle(1);
+const s = new Square(10);
